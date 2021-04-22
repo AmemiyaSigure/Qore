@@ -3,7 +3,6 @@ package cx.rain.mc.qore.api;
 import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 // Qore manager class.

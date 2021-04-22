@@ -2,6 +2,7 @@ import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
     id 'java'
+    id "com.github.johnrengelman.shadow" version "5.2.0"
 }
 
 group = 'cx.rain.mc'
@@ -24,6 +25,8 @@ repositories {
 
 dependencies {
     compileOnly "org.spigotmc:spigot-api:${project.spigot_version}"
+
+    compile "org.javalite:activejdbc-instrumentation:2.5-j8"
 }
 
 processResources {
@@ -31,3 +34,5 @@ processResources {
         filter ReplaceTokens, tokens: [version: version]
     }
 }
+
+jar.finalizedBy(shadowJar)
