@@ -1,0 +1,9 @@
+name: Qore
+version: @version@
+main: cx.rain.mc.qore.Qore
+api-version: 1.16
+prefix: Qore
+load: STARTUP
+authors: [ AmemiyaSigure ]
+description: A library for developing Minecraft Bukkit server plugins.
+website: https://github.com/AmemiyaSigure/Qore
