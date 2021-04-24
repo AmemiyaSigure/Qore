@@ -8,6 +8,8 @@ import org.bukkit.plugin.Plugin;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.stream.Collectors;
 
 public class YamlConfig extends YamlConfiguration {
     protected final String name;
@@ -34,8 +36,12 @@ public class YamlConfig extends YamlConfiguration {
         owner = api.getPlugin();
 
         name = nameIn;
-        if (!nameIn.isEmpty() && !pathIn.isEmpty()) {
-            configFile = new File(pathIn, nameIn + ".yml");
+        if (!nameIn.isEmpty()) {
+            if (pathIn.isEmpty()) {
+                configFile = new File(owner.getDataFolder().getPath(), nameIn + ".yml");
+            } else {
+                configFile = new File(pathIn, nameIn + ".yml");
+            }
         }
 
         nameInJar = nameInJarIn;
@@ -43,8 +49,8 @@ public class YamlConfig extends YamlConfiguration {
 
         if (overwrite && configFile.exists()) {
             if (!configFile.delete()) {
-                Bukkit.getLogger().warning("Cannot remove configuration of plugin " + api.getPlugin().getName() +
-                        " for overwriting. " +
+                Bukkit.getLogger().warning("Cannot remove configuration of plugin " +
+                        api.getPlugin().getName() + " for overwriting. " +
                         "File: " + configFile.getPath() + " . " +
                         "There may be something wrong, but you can continue use this plugin.");
             }
@@ -90,14 +96,12 @@ public class YamlConfig extends YamlConfiguration {
     }
 
     public void loadFileInJar() {
-        options().copyDefaults(true);
-
         String path = "";
         if (!pathInJar.isEmpty()) {
             path += pathInJar + "/";
         }
         if (nameInJar.isEmpty()) {
-            path += getName();
+            path += name;
         } else {
             path += nameInJar;
         }
@@ -105,13 +109,19 @@ public class YamlConfig extends YamlConfiguration {
 
         try {
             InputStream is = owner.getResource(path);
-            if (is != null) {
-                Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
-                YamlConfiguration defaults = YamlConfiguration.loadConfiguration(reader);
-                options().header(defaults.options().header());
-                setDefaults(defaults);
 
+            if (is != null) {
+                System.out.println("2");
+                InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
+                BufferedReader reader = new BufferedReader(isr);
+                OutputStreamWriter writer = new FileWriter(configFile);
+                for (String l : reader.lines().collect(Collectors.toList())) {
+                    System.out.println("3");
+                    writer.write(l);
+                }
+                writer.close();
                 reader.close();
+                isr.close();
                 is.close();
             }
         } catch (IOException ex) {
