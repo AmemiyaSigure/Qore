@@ -1,7 +1,6 @@
 name: Qore
 version: @version@
 main: cx.rain.mc.qore.Qore
-api-version: 1.16
 prefix: Qore
 load: STARTUP
 authors: [ AmemiyaSigure ]
