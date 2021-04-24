@@ -14,7 +14,7 @@ public final class QorePlugin extends JavaPlugin {
         if (Instance == null) {
             Instance = this;
         } else {
-            throw new RuntimeException("Why init me twice? Use Get() plz.");
+            throw new RuntimeException("Do NOT init me!");
         }
 
         logger = getLogger();

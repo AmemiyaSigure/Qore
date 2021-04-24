@@ -1,6 +1,7 @@
 package cx.rain.mc.qore.api.config;
 
 import cx.rain.mc.qore.api.QoreApi;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -23,8 +24,8 @@ public class YamlConfig extends YamlConfiguration {
         this(apiIn, nameIn, pathIn, nameIn, pathIn, false);
     }
 
-    public YamlConfig(QoreApi apiIn, String nameIn, String pathIn, String nameInJarIn, String pathInJarEIn) {
-        this(apiIn, nameIn, pathIn, nameInJarIn, pathInJarEIn, false);
+    public YamlConfig(QoreApi apiIn, String nameIn, String pathIn, String nameInJarIn, String pathInJarIn) {
+        this(apiIn, nameIn, pathIn, nameInJarIn, pathInJarIn, false);
     }
 
     public YamlConfig(QoreApi apiIn, String nameIn, String pathIn, String nameInJarIn, String pathInJarIn, boolean overwrite) {
@@ -34,7 +35,7 @@ public class YamlConfig extends YamlConfiguration {
 
         name = nameIn;
         if (!nameIn.isEmpty() && !pathIn.isEmpty()) {
-            configFile = new File(pathIn, nameIn + ",yml");
+            configFile = new File(pathIn, nameIn + ".yml");
         }
 
         nameInJar = nameInJarIn;
@@ -42,7 +43,8 @@ public class YamlConfig extends YamlConfiguration {
 
         if (overwrite && configFile.exists()) {
             if (!configFile.delete()) {
-                owner.getLogger().warning("[Qore] Cannot remove configuration for overwriting. " +
+                Bukkit.getLogger().warning("Cannot remove configuration of plugin " + api.getPlugin().getName() +
+                        " for overwriting. " +
                         "File: " + configFile.getPath() + " . " +
                         "There may be something wrong, but you can continue use this plugin.");
             }
@@ -50,6 +52,8 @@ public class YamlConfig extends YamlConfiguration {
 
         if (!configFile.exists()) {
             init(true);
+        } else {
+            load();
         }
     }
 
@@ -67,7 +71,8 @@ public class YamlConfig extends YamlConfiguration {
             configFile.getParentFile().mkdirs();
             configFile.createNewFile();
         } catch (IOException ex) {
-            owner.getLogger().warning("[Qore] Error while creating file: " + configFile.getPath() + " . " +
+            Bukkit.getLogger().warning("Error while creating file: " + configFile.getPath() + " of plugin " +
+                    api.getPlugin().getName() + ". " +
                     "Caused by: " + ex);
         }
 

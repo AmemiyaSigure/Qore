@@ -26,7 +26,7 @@ repositories {
 dependencies {
     compileOnly "org.spigotmc:spigot-api:${project.spigot_version}"
 
-    compile "org.javalite:activejdbc-instrumentation:2.5-j8"
+    compile "org.javalite:activejdbc:2.5-j8"
 }
 
 processResources {
