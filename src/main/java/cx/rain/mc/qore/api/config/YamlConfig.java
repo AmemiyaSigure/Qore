@@ -9,6 +9,7 @@ import org.bukkit.plugin.Plugin;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.stream.Collectors;
 
 public class YamlConfig extends YamlConfiguration {
@@ -84,7 +85,7 @@ public class YamlConfig extends YamlConfiguration {
 
         loadFileInJar();
 
-        reload();
+        reload(true);
     }
 
     public void load() {
@@ -98,33 +99,28 @@ public class YamlConfig extends YamlConfiguration {
     public void loadFileInJar() {
         String path = "";
         if (!pathInJar.isEmpty()) {
+
+            // qyl: The pathInJar starts with / will cause not found.
+            if (pathInJar.startsWith("/")) {
+                pathInJar = pathInJar.substring(1);
+            }
+
             path += pathInJar + "/";
         }
-        if (nameInJar.isEmpty()) {
-            path += name;
-        } else {
+        if (!nameInJar.isEmpty()) {
             path += nameInJar;
+        } else {
+            path += name;
         }
         path += ".yml";
 
-        try {
-            InputStream is = owner.getResource(path);
+        System.out.println(path);
 
+        try (InputStream is = owner.getResource(path)) {
             if (is != null) {
-                System.out.println("2");
-                InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
-                BufferedReader reader = new BufferedReader(isr);
-                OutputStreamWriter writer = new FileWriter(configFile);
-                for (String l : reader.lines().collect(Collectors.toList())) {
-                    System.out.println("3");
-                    writer.write(l);
-                }
-                writer.close();
-                reader.close();
-                isr.close();
-                is.close();
+                Files.copy(is, configFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
             }
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
