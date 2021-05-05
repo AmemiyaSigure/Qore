@@ -3,9 +3,12 @@ package cx.rain.mc.qore.api.database;
 import cx.rain.mc.qore.api.QoreApi;
 import org.bukkit.plugin.Plugin;
 import org.javalite.activejdbc.DB;
+import org.javalite.activejdbc.RowListenerAdapter;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class QoreDatabase {
     private final QoreApi api;
@@ -30,6 +33,18 @@ public class QoreDatabase {
         databases.put(db.name(), db);
         return db;
     }
+
+//    public void ensureCreated(String name, String dbName, int tableCount, String sql) {
+//        DB db = databases.get(name);
+//        db.find("select count(*) from `INFORMATION_SCHEMA`.`TABLES` where `TABLE_SCHEMA` = ?;", dbName)
+//                .with(new RowListenerAdapter() {
+//                    @Override
+//                    public void onNext(Map<String, Object> row) {
+//
+//                    }
+//                });
+//
+//    }
 
     public void close(String connectionName) {
         if (databases.containsKey(connectionName)) {
