@@ -34,12 +34,11 @@ public class QoreDatabase {
         return db;
     }
 
-    public void ensureCreated(String name, String dbName, int tableCount, String sql) {
-        DB db = databases.get(name);
-        Object obj = db.findAll("select count(*) from `INFORMATION_SCHEMA`.`TABLES` where `TABLE_SCHEMA` = ?;",
-                dbName).get(0).get("count(0)");
-        if (Integer.parseInt(obj.toString()) != tableCount) {
-            db.exec(sql);
+    public void loadModels(String modelName) {
+        try {
+            Class.forName(modelName);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
