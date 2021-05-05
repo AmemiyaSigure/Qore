@@ -114,8 +114,6 @@ public class YamlConfig extends YamlConfiguration {
         }
         path += ".yml";
 
-        System.out.println(path);
-
         try (InputStream is = owner.getResource(path)) {
             if (is != null) {
                 Files.copy(is, configFile.toPath(), StandardCopyOption.REPLACE_EXISTING);

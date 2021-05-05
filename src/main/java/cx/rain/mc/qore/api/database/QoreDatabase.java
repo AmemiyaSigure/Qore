@@ -3,12 +3,9 @@ package cx.rain.mc.qore.api.database;
 import cx.rain.mc.qore.api.QoreApi;
 import org.bukkit.plugin.Plugin;
 import org.javalite.activejdbc.DB;
-import org.javalite.activejdbc.RowListenerAdapter;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class QoreDatabase {
     private final QoreApi api;
@@ -32,14 +29,6 @@ public class QoreDatabase {
         DB db = new DB(connectionName).open(source);
         databases.put(db.name(), db);
         return db;
-    }
-
-    public void loadModels(String modelName) {
-        try {
-            Class.forName(modelName);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 
     public void close(String connectionName) {
