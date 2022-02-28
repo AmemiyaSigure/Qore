@@ -5,6 +5,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
 
+@Deprecated
 public class QoreConfig {
     private final QoreApi api;
     private final Plugin plugin;

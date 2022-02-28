@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.stream.Collectors;
 
+@Deprecated
 public class YamlConfig extends YamlConfiguration {
     protected final String name;
 
