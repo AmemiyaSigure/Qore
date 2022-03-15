@@ -1,4 +1,4 @@
-package cx.rain.mc.qore.api;
+package cx.rain.mc.qore;
 
 import org.bukkit.plugin.Plugin;
 

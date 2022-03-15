@@ -1,6 +1,5 @@
 package cx.rain.mc.qore;
 
-import cx.rain.mc.qore.api.Qore;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
@@ -27,13 +26,13 @@ public final class QorePlugin extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
 
-        logger.info("Hello, bukkit!");
+        logger.info("Hello, also try IEconomy!");
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
 
-        logger.info("Goodbye, bukkit!");
+        logger.info("Goodbye!");
     }
 }
