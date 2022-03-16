@@ -1,5 +1,7 @@
 package cx.rain.mc.qore.api.config;
 
+import com.moandjiezana.toml.Toml;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +9,6 @@ public class ConfigBuilder {
     public List<Element> configStack = new ArrayList<>();
 
     private ConfigBuilder() {
-
     }
 
     public static class Element {
