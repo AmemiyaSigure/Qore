@@ -52,3 +52,7 @@ processResources {
 }
 
 jar.finalizedBy(shadowJar)
+
+publishToMavenLocal {
+
+}
